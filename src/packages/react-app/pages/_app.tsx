@@ -1,14 +1,16 @@
 import React from "react";
 import '@celo/react-celo/lib/styles.css';
-import { SnackbarProvider } from "notistack";
+// import { SnackbarProvider } from "notistack";
 import { ApolloProvider } from "@apollo/client";
 import client from "@/apollo-client";
 import { Alfajores, CeloProvider } from "@celo/react-celo";
 import { AppProps } from "next/app";
-import { CustomThemeProvider } from "@/contexts/userTheme";
+// import { CustomThemeProvider } from "@/contexts/userTheme";
 import { Provider } from "react-redux"
 import store from "@/state/index"
 import AppUpdater from "@/state/app/updater"
+import { ChakraProvider } from "@chakra-ui/react";
+import '../styles/index.css'
 
 function Updaters() {
   return (
@@ -21,7 +23,7 @@ function Updaters() {
 function MyApp({ Component, pageProps }: AppProps): React.ReactElement {
   return (
     <Provider store={store}>
-      <CustomThemeProvider>
+      <ChakraProvider>
         <CeloProvider
           dapp={{
             name: "Celo Composer",
@@ -32,13 +34,7 @@ function MyApp({ Component, pageProps }: AppProps): React.ReactElement {
           network={Alfajores}
           // networks={[Mainnet, Alfajores]}
         >
-          <SnackbarProvider
-            maxSnack={3}
-            anchorOrigin={{
-              vertical: "bottom",
-              horizontal: "right",
-            }}
-          >
+
             <Updaters/>
             <ApolloProvider client={client}>
               <div suppressHydrationWarning>
@@ -47,9 +43,9 @@ function MyApp({ Component, pageProps }: AppProps): React.ReactElement {
                 )}
               </div>
             </ApolloProvider>
-          </SnackbarProvider>
+
         </CeloProvider>
-      </CustomThemeProvider>
+      </ChakraProvider>
     </Provider>
   );
 }
